@@ -27,8 +27,10 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'activesupport', '>= 6.1'
+  spec.add_dependency 'attr_extras', '~> 6.2'
   spec.add_dependency 'faraday', '~> 1.10'
-  spec.add_dependency 'jwt', '~> 2.4'
+  spec.add_dependency 'jwt', '~> 2.2'
   spec.add_dependency 'oauth2', '~> 2.0'
 
   # For more information and examples about making a new gem, check out our
