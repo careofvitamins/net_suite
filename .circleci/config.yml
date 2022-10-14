@@ -6,8 +6,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run the default task
+          name: Install dependencies
           command: |
             gem install bundler -v 2.3.19
             bundle install
-            bundle exec rake
+          when: always
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+          when: always
+      - run:
+          name: Run specs
+          command: bundle exec rake
+          when: always
