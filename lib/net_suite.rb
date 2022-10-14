@@ -3,8 +3,10 @@
 require 'active_support'
 require 'active_support/core_ext'
 
-require_relative 'net_suite/version'
-
 module NetSuite
+  extend ActiveSupport::Autoload
+
+  autoload :VERSION
+
   class Error < StandardError; end
 end
