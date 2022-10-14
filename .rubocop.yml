@@ -1,0 +1,14 @@
+AllCops:
+  TargetRubyVersion: 3.1
+  DisplayCopNames: true
+  UseCache: true
+  SuggestExtensions: false
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 152
+
+Metrics/BlockLength:
+  Exclude:
+    - Gemfile
+    - net_suite.gemspec
