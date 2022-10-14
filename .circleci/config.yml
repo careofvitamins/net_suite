@@ -17,5 +17,5 @@ jobs:
           when: always
       - run:
           name: Run specs
-          command: bundle exec rake
+          command: bundle exec rspec
           when: always
