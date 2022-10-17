@@ -9,7 +9,8 @@ module NetSuite
 
   autoload :AuthToken
   autoload :Client
-  autoload :Config
+  autoload :Configuration
+  autoload :Restlet
   autoload :VERSION
 
   class Error < StandardError; end

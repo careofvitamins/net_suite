@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module NetSuite
-  class Config
+  class Configuration
     rattr_initialize [
       :oauth!,
       :restlet!,
+      :logger!,
       {
-        logger: nil,
         log_requests: false,
         request_timeout: 120,
       },
@@ -28,8 +28,11 @@ module NetSuite
     end
 
     class Restlet
-      rattr_initialize %i[
-        api_host!
+      rattr_initialize [
+        :api_host!,
+        {
+          path: '/app/site/hosting/restlet.nl',
+        },
       ]
     end
   end
