@@ -7,6 +7,9 @@ require 'active_support/core_ext'
 module NetSuite
   extend ActiveSupport::Autoload
 
+  autoload :AuthToken
+  autoload :Client
+  autoload :Config
   autoload :VERSION
 
   class Error < StandardError; end
