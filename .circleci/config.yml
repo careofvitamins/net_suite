@@ -17,5 +17,12 @@ jobs:
           when: always
       - run:
           name: Run specs
-          command: bundle exec rspec
+          command: |
+            bundle exec rspec \
+              --require rspec_junit_formatter \
+              --format progress \
+              --format RspecJunitFormatter \
+              --out tmp/test-results/rspec.xml
           when: always
+      - store_test_results:
+          path: tmp/test-results/
