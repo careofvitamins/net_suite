@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'net_suite'
+require 'pry'
 require 'webmock/rspec'
 
 RSpec.configure do |config|
