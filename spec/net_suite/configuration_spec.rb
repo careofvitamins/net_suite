@@ -170,7 +170,7 @@ describe NetSuite::Configuration do
           subject { described_class.new(api_host:) }
 
           it 'is configured with default value' do
-            expect(subject.path).to eq('/app/site/hosting/restlet.nl')
+            expect(subject.path).to eq('app/site/hosting/restlet.nl')
           end
         end
 

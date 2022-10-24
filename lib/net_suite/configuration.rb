@@ -31,7 +31,7 @@ module NetSuite
       rattr_initialize [
         :api_host!,
         {
-          path: '/app/site/hosting/restlet.nl',
+          path: 'app/site/hosting/restlet.nl',
         },
       ]
     end

@@ -39,7 +39,7 @@ module NetSuite
     end
 
     ALGORITHM = 'RS512'
-    TOKEN_URL = '/services/rest/auth/oauth2/v1/token'
+    TOKEN_URL = 'services/rest/auth/oauth2/v1/token'
     CACHE_KEY = 'net_suite_oauth_access_token'
 
     def write_token_to_cache(token)
