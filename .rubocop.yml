@@ -12,6 +12,7 @@ Metrics/BlockLength:
   Exclude:
     - Gemfile
     - net_suite.gemspec
+    - spec/**/*_spec.rb
 
 Style/Documentation:
   Enabled: false
