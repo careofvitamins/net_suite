@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faraday'
+
 module NetSuite
   class Restlet
     rattr_initialize :config
