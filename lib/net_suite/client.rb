@@ -53,7 +53,7 @@ module NetSuite
     attr_accessor :retry_count
 
     def trace_call(method, url, request_payload, *_args, &)
-      return yield unless defined?(::Datadog::Tracing.trace)
+      return yield unless trace_requests?
 
       ::Datadog::Tracing.trace("netsuite #{method}",
                                resource: "#{method} #{url}",
@@ -107,6 +107,10 @@ module NetSuite
 
     def log_requests?
       config.logger && config.log_requests?
+    end
+
+    def trace_requests?
+      defined?(::Datadog::Tracing.trace) && config.trace_requests?
     end
 
     def build_connection

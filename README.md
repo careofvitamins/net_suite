@@ -28,6 +28,7 @@ config = NetSuite::Configuration.new(
   ),
   logger: Rails.logger,
   log_requests: true,
+  trace_requests: true,
   request_timeout: 30,
 )
 ```

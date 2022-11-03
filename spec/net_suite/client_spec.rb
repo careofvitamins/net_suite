@@ -9,6 +9,7 @@ describe NetSuite::Client do
       restlet: restlet_config,
       logger:,
       log_requests:,
+      trace_requests:,
       request_timeout:,
     )
   end
@@ -43,6 +44,7 @@ describe NetSuite::Client do
   end
 
   let(:log_requests) { true }
+  let(:trace_requests) { true }
   let(:request_timeout) { 30 }
 
   let(:path) { '/some_path' }
