@@ -58,20 +58,20 @@ describe NetSuite::Configuration do
       end
     end
 
-    describe 'trace_requests' do
-      context 'when trace_requests is missing' do
+    describe 'datadog_request_tracing' do
+      context 'when datadog_request_tracing is missing' do
         subject { described_class.new(oauth:, restlet:, logger:) }
 
         it 'is configured with false as default' do
-          expect(subject.trace_requests).to eq(false)
+          expect(subject.datadog_request_tracing).to eq(false)
         end
       end
 
-      context 'when trace_requests is included' do
-        subject { described_class.new(oauth:, restlet:, logger:, trace_requests: :something) }
+      context 'when datadog_request_tracing is included' do
+        subject { described_class.new(oauth:, restlet:, logger:, datadog_request_tracing: :something) }
 
         it 'is configured with the provided value' do
-          expect(subject.trace_requests).to eq(:something)
+          expect(subject.datadog_request_tracing).to eq(:something)
         end
       end
     end

@@ -8,13 +8,13 @@ module NetSuite
       :logger!,
       {
         log_requests: false,
-        trace_requests: false,
+        datadog_request_tracing: false,
         request_timeout: 120,
       },
     ]
 
     alias log_requests? log_requests
-    alias trace_requests? trace_requests
+    alias datadog_request_tracing? datadog_request_tracing
 
     class OAuth
       rattr_initialize [
