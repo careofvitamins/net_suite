@@ -12,7 +12,9 @@ module NetSuite
       class_eval <<-RUBY, __FILE__, __LINE__ + 1
         # def get(url = nil, params = nil, headers = nil)
         #   with_auth_retry do
-        #     connection.get(url, params, headers)
+        #     trace_call(__method__.to_s.upcase, url, nil) do
+        #       connection.get(url, params, headers)
+        #     end
         #   end
         # end
 
@@ -30,7 +32,9 @@ module NetSuite
       class_eval <<-RUBY, __FILE__, __LINE__ + 1
         # def post(url = nil, body = nil, headers = nil, &block)
         #   with_auth_retry do
-        #     connection.post(url, body, headers, &block)
+        #     trace_call(__method__.to_s.upcase, url, body) do
+        #       connection.post(url, body, headers, &block)
+        #     end
         #   end
         # end
 
