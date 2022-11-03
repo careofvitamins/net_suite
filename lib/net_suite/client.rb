@@ -59,7 +59,7 @@ module NetSuite
                              resource: "#{method} #{url}",
                              span_type: 'http',
                              service: 'netsuite',
-                             tags: { method:, url:, request_payload: },
+                             tags: { method:, url:, request_payload:, async: async? },
                              &)
     end
 
@@ -111,6 +111,10 @@ module NetSuite
 
     def datadog_request_tracing?
       defined?(Datadog::Tracing.trace) && config.datadog_request_tracing?
+    end
+
+    def async?
+      defined?(Sidekiq.server?) && Sidekiq.server?
     end
 
     def build_connection
