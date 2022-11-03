@@ -48,17 +48,17 @@ module NetSuite
 
     attr_accessor :retry_count
 
-    def trace_call(method, url, request_payload, *args, &block)
+    def trace_call(method, url, request_payload, *_args, &)
       return yield unless defined?(::Datadog::Tracing.trace)
 
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
       ::Datadog::Tracing.trace("netsuite #{method}",
-        resource: "#{method} #{url}",
-        span_type: 'http',
-        service: 'netsuite',
-        tags: { method: method, url: url, request_payload: request_payload },
-        &block)
+                               resource: "#{method} #{url}",
+                               span_type: 'http',
+                               service: 'netsuite',
+                               tags: { method:, url:, request_payload: },
+                               &)
     end
 
     def with_auth_retry(&)
