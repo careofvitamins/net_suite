@@ -7,6 +7,8 @@ gemspec
 
 group :development, :test do
   gem 'pry', '~> 0.14'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
   gem 'rake', '~> 13.0'
   gem 'rspec', '~> 3.0'
   gem 'rspec_junit_formatter', '~> 0.6'
