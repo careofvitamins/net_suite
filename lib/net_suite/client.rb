@@ -51,8 +51,6 @@ module NetSuite
     def trace_call(method, url, request_payload, *_args, &)
       return yield unless defined?(::Datadog::Tracing.trace)
 
-      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-
       ::Datadog::Tracing.trace("netsuite #{method}",
                                resource: "#{method} #{url}",
                                span_type: 'http',
