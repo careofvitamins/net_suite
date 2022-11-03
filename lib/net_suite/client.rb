@@ -56,11 +56,11 @@ module NetSuite
       return yield unless datadog_request_tracing?
 
       Datadog::Tracing.trace("netsuite #{method}",
-                               resource: "#{method} #{url}",
-                               span_type: 'http',
-                               service: 'netsuite',
-                               tags: { method:, url:, request_payload: },
-                               &)
+                             resource: "#{method} #{url}",
+                             span_type: 'http',
+                             service: 'netsuite',
+                             tags: { method:, url:, request_payload: },
+                             &)
     end
 
     def with_auth_retry(&)
