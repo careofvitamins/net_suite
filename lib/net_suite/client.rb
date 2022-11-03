@@ -58,13 +58,7 @@ module NetSuite
         span_type: 'http',
         service: 'netsuite',
         tags: { method: method, url: url, request_payload: request_payload },
-        &block).tap { send_metric(method, started) }
-    end
-
-    def send_metric(method, started)
-      ended = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-
-      $stats.distribution('net_suite.timing', ended - started, tags: { method: method })
+        &block)
     end
 
     def with_auth_retry(&)
