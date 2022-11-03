@@ -55,7 +55,7 @@ module NetSuite
     def trace_call(method, url, request_payload, &)
       return yield unless datadog_request_tracing?
 
-      ::Datadog::Tracing.trace("netsuite #{method}",
+      Datadog::Tracing.trace("netsuite #{method}",
                                resource: "#{method} #{url}",
                                span_type: 'http',
                                service: 'netsuite',
@@ -110,7 +110,7 @@ module NetSuite
     end
 
     def datadog_request_tracing?
-      defined?(::Datadog::Tracing.trace) && config.datadog_request_tracing?
+      defined?(Datadog::Tracing.trace) && config.datadog_request_tracing?
     end
 
     def build_connection
