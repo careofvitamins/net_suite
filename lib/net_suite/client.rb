@@ -18,7 +18,9 @@ module NetSuite
 
         def #{method}(url = nil, params = nil, headers = nil)
           with_auth_retry do
-            connection.#{method}(url, params, headers)
+            trace_call(__method__.to_s.upcase, url, nil) do
+              connection.#{method}(url, params, headers)
+            end
           end
         end
       RUBY
@@ -34,7 +36,9 @@ module NetSuite
 
         def #{method}(url = nil, body = nil, headers = nil, &block)
           with_auth_retry do
-            connection.#{method}(url, body, headers, &block)
+            trace_call(__method__.to_s.upcase, url, body) do
+              connection.#{method}(url, body, headers, &block)
+            end
           end
         end
       RUBY
@@ -43,6 +47,25 @@ module NetSuite
     private
 
     attr_accessor :retry_count
+
+    def trace_call(method, url, request_payload, *args, &block)
+      return yield unless defined?(::Datadog::Tracing.trace)
+
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      ::Datadog::Tracing.trace("netsuite #{method}",
+        resource: "#{method} #{url}",
+        span_type: 'http',
+        service: 'netsuite',
+        tags: { method: method, url: url, request_payload: request_payload },
+        &block).tap { send_metric(method, started) }
+    end
+
+    def send_metric(method, started)
+      ended = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      $stats.distribution('net_suite.timing', ended - started, tags: { method: method })
+    end
 
     def with_auth_retry(&)
       initial_response = yield
