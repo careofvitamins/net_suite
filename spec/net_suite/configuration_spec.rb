@@ -58,6 +58,24 @@ describe NetSuite::Configuration do
       end
     end
 
+    describe 'datadog_request_tracing' do
+      context 'when datadog_request_tracing is missing' do
+        subject { described_class.new(oauth:, restlet:, logger:) }
+
+        it 'is configured with false as default' do
+          expect(subject.datadog_request_tracing).to eq(false)
+        end
+      end
+
+      context 'when datadog_request_tracing is included' do
+        subject { described_class.new(oauth:, restlet:, logger:, datadog_request_tracing: :something) }
+
+        it 'is configured with the provided value' do
+          expect(subject.datadog_request_tracing).to eq(:something)
+        end
+      end
+    end
+
     describe 'request_timeout' do
       context 'when request_timeout is missing' do
         subject { described_class.new(oauth:, restlet:, logger:) }

@@ -12,13 +12,17 @@ module NetSuite
       class_eval <<-RUBY, __FILE__, __LINE__ + 1
         # def get(url = nil, params = nil, headers = nil)
         #   with_auth_retry do
-        #     connection.get(url, params, headers)
+        #     trace_call(__method__.to_s.upcase, url, nil) do
+        #       connection.get(url, params, headers)
+        #     end
         #   end
         # end
 
         def #{method}(url = nil, params = nil, headers = nil)
           with_auth_retry do
-            connection.#{method}(url, params, headers)
+            trace_call(__method__.to_s.upcase, url, nil) do
+              connection.#{method}(url, params, headers)
+            end
           end
         end
       RUBY
@@ -28,13 +32,17 @@ module NetSuite
       class_eval <<-RUBY, __FILE__, __LINE__ + 1
         # def post(url = nil, body = nil, headers = nil, &block)
         #   with_auth_retry do
-        #     connection.post(url, body, headers, &block)
+        #     trace_call(__method__.to_s.upcase, url, body) do
+        #       connection.post(url, body, headers, &block)
+        #     end
         #   end
         # end
 
         def #{method}(url = nil, body = nil, headers = nil, &block)
           with_auth_retry do
-            connection.#{method}(url, body, headers, &block)
+            trace_call(__method__.to_s.upcase, url, body) do
+              connection.#{method}(url, body, headers, &block)
+            end
           end
         end
       RUBY
@@ -43,6 +51,17 @@ module NetSuite
     private
 
     attr_accessor :retry_count
+
+    def trace_call(method, url, request_payload, &)
+      return yield unless datadog_request_tracing?
+
+      Datadog::Tracing.trace("netsuite #{method}",
+                             resource: "#{method} #{url}",
+                             span_type: 'http',
+                             service: 'netsuite',
+                             tags: { method:, url:, request_payload:, async: async? },
+                             &)
+    end
 
     def with_auth_retry(&)
       initial_response = yield
@@ -88,6 +107,14 @@ module NetSuite
 
     def log_requests?
       config.logger && config.log_requests?
+    end
+
+    def datadog_request_tracing?
+      defined?(Datadog::Tracing.trace) && config.datadog_request_tracing?
+    end
+
+    def async?
+      defined?(Sidekiq.server?) && Sidekiq.server?
     end
 
     def build_connection
