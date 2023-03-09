@@ -58,6 +58,24 @@ describe NetSuite::Configuration do
       end
     end
 
+    describe 'log_level' do
+      context 'when log_level is missing' do
+        subject { described_class.new(oauth:, restlet:, logger:) }
+
+        it 'is configured with :info as default' do
+          expect(subject.log_level).to eq(:info)
+        end
+      end
+
+      context 'when log_level is included' do
+        subject { described_class.new(oauth:, restlet:, logger:, log_level: :warn) }
+
+        it 'is configured with the provided value' do
+          expect(subject.log_level).to eq(:warn)
+        end
+      end
+    end
+
     describe 'datadog_request_tracing' do
       context 'when datadog_request_tracing is missing' do
         subject { described_class.new(oauth:, restlet:, logger:) }

@@ -125,8 +125,20 @@ module NetSuite
         conn.request :authorization, 'Bearer', -> { fetch_auth_token }
         conn.response :json, content_type: /\bjson$/
 
-        conn.response :logger, config.logger, headers: true, bodies: true if log_requests?
+        configure_logging(conn)
       end
+    end
+
+    def configure_logging(connection)
+      return unless log_requests?
+
+      connection.response(
+        :logger,
+        config.logger,
+        headers: true,
+        bodies: true,
+        log_level: config.log_level,
+      )
     end
   end
 end
