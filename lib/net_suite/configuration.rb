@@ -7,6 +7,7 @@ module NetSuite
       :restlet!,
       :logger!,
       {
+        log_level: :info,
         log_requests: false,
         datadog_request_tracing: false,
         request_timeout: 120,

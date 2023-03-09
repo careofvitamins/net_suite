@@ -15,7 +15,7 @@ describe NetSuite::Client do
   end
 
   let(:oauth_config) do
-    ::NetSuite::Configuration::OAuth.new(
+    NetSuite::Configuration::OAuth.new(
       api_host: 'http://oauth.example.com',
       client_id: 'a_client_id',
       certificate_id: 'aaaaaaaaaaaa',
